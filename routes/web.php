@@ -1,17 +1,17 @@
 <?php
 
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\AlbumSongController;
 use App\Http\Controllers\BandController;
 use App\Http\Controllers\SongController;
 use Illuminate\Support\Facades\Route;
-
 
 
 // Route::resource('songs', SongController::class);
 
 
 //albums routes
-Route::get('/', [AlbumController::class, 'index'])->name('albums.index');
+Route::get('/', [AlbumController::class, 'index']);
 Route::get('/albums', [AlbumController::class, 'index'])->name('albums.index');
 Route::get('/albums/create', [AlbumController::class, 'create'])->name('albums.create');
 Route::post('/albums', [AlbumController::class, 'store'])->name('albums.store');
@@ -19,6 +19,10 @@ Route::get('/albums/{album}', [AlbumController::class, 'show'])->name('albums.sh
 Route::get('/albums/{album}/edit', [AlbumController::class, 'edit'])->name('albums.edit');
 Route::put('/albums/{album}', [AlbumController::class, 'update'])->name('albums.update');
 Route::delete('/albums/{album}', [AlbumController::class, 'destroy'])->name('albums.destroy');
+// attach and detach songs to albums
+Route::post('/albums/{album}/songs/attach', [AlbumController::class, 'attachSong'])->name('albums.songs.attach');
+Route::post('/albums/{album}/songs/{song}/detach', [AlbumController::class, 'detachSong'])->name('albums.songs.detach');
+
 
 //bands routes
 Route::get('/bands', [BandController::class, 'index'])->name('bands.index');
@@ -31,15 +35,13 @@ Route::delete('/bands/{band}', [BandController::class, 'destroy'])->name('bands.
 
 
 //songs routes
-// Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
-// Route::get('/songs/create', [SongController::class, 'create'])->name('songs.create');
-// Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
-// Route::get('/songs/{song}', [SongController::class, 'show'])->name('songs.show');
-// Route::get('/songs/{song}/edit', [SongController::class, 'edit'])->name('songs.edit');
-// Route::put('/songs/{song}', [SongController::class, 'update'])->name('songs.update');
-// Route::delete('/songs/{song}', [SongController::class, 'destroy'])->name('songs.destroy');
-
-// Route::resource('songs', SongController::class)->except(['index', 'show'])->auth();
-// Route::resource('songs', SongController::class)->only(['index', 'show']);
-
-Route::resource('songs', SongController::class)->only(['index', 'show']);
+Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
+Route::get('/songs/create', [SongController::class, 'create'])->name('songs.create');
+Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
+Route::get('/songs/{song}', [SongController::class, 'show'])->name('songs.show');
+Route::get('/songs/{song}/edit', [SongController::class, 'edit'])->name('songs.edit');
+Route::put('/songs/{song}', [SongController::class, 'update'])->name('songs.update');
+Route::delete('/songs/{song}', [SongController::class, 'destroy'])->name('songs.destroy');
+// attach and detach songs to albums
+Route::post('/songs/{song}/albums/attach', [SongController::class, 'attachAlbum'])->name('songs.albums.attach');
+Route::post('/songs/{song}/albums/{album}/detach', [SongController::class, 'detachAlbum'])->name('songs.albums.detach');

@@ -18,7 +18,7 @@
         <div class="bg-white p-6 rounded shadow-md mt-6">
 
             <div class="mb-4">
-                <label for="title" class="block text-gray-700">Song Title:</label>
+                <label for="title" class="block text-gray-700">Title:</label>
                 <input type="text" name="title" value="{{ $song->title }}" class="w-full px-3 py-2 border rounded"
                     readonly>
             </div>
@@ -27,6 +27,15 @@
                 <label for="singer" class="block text-gray-700">Singer:</label>
                 <input type="text" name="singer" value="{{ $song->singer }}" class="w-full px-3 py-2 border rounded"
                     readonly>
+            </div>
+
+            <div class="mb-4">
+                <label for="albums" class="block text-gray-700">Albums:</label>
+                <ul>
+                    @foreach ($song->albums as $album)
+                        <li>{{ $album->name }}</li>
+                    @endforeach
+                </ul>
             </div>
 
             <div class="flex space-x-4 mt-4">

@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="band" class="block text-gray-700">Album Band:</label>
+                    <label for="band" class="block text-gray-700">Band:</label>
                     <select name="band_id" class="w-full px-3 py-2 border rounded">
                         @foreach ($bands as $band)
                             <option value = "{{ $band->id }}" {{ $band->id == old('band_id') ? 'selected' : '' }}>

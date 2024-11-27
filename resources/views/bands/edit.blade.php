@@ -20,8 +20,8 @@
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
-                    <label for="name" class="block text-gray-700">Band Name:</label>
-                    <input type="text" maxlength="255" name="name" value="{{ $band->name }}"
+                    <label for="name" class="block text-gray-700">Name:</label>
+                    <input type="text" name="name" value="{{ $band->name }}"
                         class="w-full px-3 py-2 border rounded" value="{{ old('name') }}">
                     @error('name')
                         <p class="text-red-500">{{ $message }}</p>
@@ -30,7 +30,7 @@
 
                 <div class="mb-4">
                     <label for="genre" class="block text-gray-700">Genre:</label>
-                    <input type="text" maxlength="255" name="genre" value="{{ $band->genre }}"
+                    <input type="text" name="genre" value="{{ $band->genre }}"
                         class="w-full px-3 py-2 border rounded" value="{{ old('genre') }}">
                     @error('genre')
                         <p class="text-red-500">{{ $message }}</p>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="active_till" class="block text-gray-700">Active till:</label>
+                    <label for="active_till" class="block text-gray-700">Active Till:</label>
                     <input type="text" maxlength="4" name="active_till" value="{{ $band->active_till }}"
                         class="w-full px-3 py-2 border rounded" value="{{ old('active_till') }}">
                     @error('active_till')

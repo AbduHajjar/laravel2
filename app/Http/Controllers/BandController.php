@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Band;
 use Illuminate\Http\Request;
 
@@ -30,16 +29,16 @@ class BandController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData =  $request->validate([
+        //validate the request
+        $request->validate([
             'name' => 'required|string|max:255',
             'genre' => 'required|string|max:255',
-            // 'founded' => 'required|integer|digits:4|min:1900|max' . date('Y'),
+            // 'founded' => 'required|integer|digits:4|min:1900|max:' . date("Y"),
             'founded' => 'required|integer|digits:4',
-            // 'active_till' => 'nullable|integer|digits:4'|'min:1900|max' . date('Y'),
+            // 'active_till' => 'nullable|integer|digits:4|min:1900',
             'active_till' => 'nullable|integer|digits:4',
         ]);
-
-        Band::create($validatedData);
+        Band::create($request->all());
         return redirect()->route('bands.index')->with('success', 'Band created successfully.');
     }
 
@@ -66,16 +65,17 @@ class BandController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
+        //validate the request
+        $request->validate([
             'name' => 'required|string|max:255',
             'genre' => 'required|string|max:255',
-             // 'founded' => 'required|integer|digits:4|min:1900|max' . date('Y'),
+            // 'founded' => 'required|integer|digits:4|min:1900|max:' . date("Y"),
             'founded' => 'required|integer|digits:4',
-            // 'active_till' => 'nullable|integer|digits:4'|'min:1900|max' . date('Y'),
+            // 'active_till' => 'nullable|integer|digits:4|min:1900',
             'active_till' => 'nullable|integer|digits:4',
         ]);
-
-        Band::findOrFail($id)->update($validatedData);
+        $band = Band::findOrFail($id);
+        $band->update($request->all());
         return redirect()->route('bands.index')->with('success', 'Band updated successfully.');
     }
 
@@ -84,7 +84,7 @@ class BandController extends Controller
      */
     public function destroy(string $id)
     {
-        Band::findOrFail($id)->delete();
+        Band::destroy($id);
         return redirect()->route('bands.index')->with('success', 'Band deleted successfully.');
     }
 }

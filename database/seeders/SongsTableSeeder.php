@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SongsSeeder extends Seeder
+class SongsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

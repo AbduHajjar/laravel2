@@ -36,11 +36,19 @@
             </div>
 
             <div class="mb-4">
-                <label for="band_id" class="block text-gray-700">Band:</label>
-                <input type="text" name="band_id" value="{{ $album->band->name }}"
+                <label for="band" class="block text-gray-700">Band:</label>
+                <input type="text" name="band" value="{{ $album->band->name }}"
                     class="w-full px-3 py-2 border rounded" readonly>
             </div>
 
+            <div class="mb-4">
+                <label for="songs" class="block text-gray-700">Songs:</label>
+                <ul>
+                    @foreach ($album->songs as $song)
+                        <li>{{ $song->title }}</li>
+                    @endforeach
+                </ul>
+            </div>
 
             <div class="flex space-x-4 mt-4">
                 <a href="{{ route('albums.edit', $album->id) }}"

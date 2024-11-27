@@ -19,7 +19,7 @@
             <form action="{{ route('songs.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="title" class="block text-gray-700">Song Title:</label>
+                    <label for="title" class="block text-gray-700">Title:</label>
                     <input type="text" name="title" class="w-full px-3 py-2 border rounded"
                         value="{{ old('title') }}">
                     @error('title')

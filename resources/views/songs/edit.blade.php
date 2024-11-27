@@ -20,8 +20,8 @@
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
-                    <label for="title" class="block text-gray-700">Song Title:</label>
-                    <input type="text" maxlength="255" name="title" value="{{ $song->title }}"
+                    <label for="title" class="block text-gray-700">Title:</label>
+                    <input type="text" name="title" value="{{ $song->title }}"
                         class="w-full px-3 py-2 border rounded" value="{{ old('title') }}">
                     @error('title')
                         <p class="text-red-500">{{ $message }}</p>
@@ -30,7 +30,7 @@
 
                 <div class="mb-4">
                     <label for="singer" class="block text-gray-700">Singer:</label>
-                    <input type="text" maxlength="255" name="singer" value="{{ $song->singer }}"
+                    <input type="text" name="singer" value="{{ $song->singer }}"
                         class="w-full px-3 py-2 border rounded" value="{{ old('singer') }}">
                     @error('singer')
                         <p class="text-red-500">{{ $message }}</p>
