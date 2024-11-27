@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
 use App\Models\Song;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,8 @@ class SongController extends Controller
      */
     public function create()
     {
-        return view('songs.create');
+        $albums = Album::all();
+        return view('songs.create' , ['albums' => $albums]);
     }
 
     /**
@@ -39,8 +41,14 @@ class SongController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'singer' => 'nullable|string|max:255',
+            'albums' => 'nullable|array',
+            'albums.*' => 'exists:albums,id'
+            
         ]);
-        Song::create($validatedData);
+        $song = Song::create($validatedData);
+        if ($request->has('albums')) {
+            $song->albums()->attach($request->albums);
+        }
         return redirect()->route('songs.index')->with('success', 'Song created successfully.');
 
         /*
@@ -125,7 +133,7 @@ class SongController extends Controller
         ]);
 
         // Find the song by its ID and update it with the validated data
-        $song = Song::findOrFail($id)->update($validatedData);
+        Song::findOrFail($id)->update($validatedData);
 
         // Redirect to the index page with a success message
         return redirect()->route('songs.index')->with('success', 'Song updated successfully.');
@@ -140,37 +148,5 @@ class SongController extends Controller
 
         // Redirect to the index page with a success message
         return redirect()->route('songs.index')->with('success', 'Song deleted successfully.');
-    }
-
-
-
-    public function attachAlbum(Request $request, $songId)
-    {
-        $song = Song::findOrFail($songId);
-
-        // Validate the incoming request to ensure an album ID is provided
-        $request->validate([
-            'album_id' => 'required|exists:albums,id',
-        ]);
-
-        $albumId = $request->input('album_id');
-
-        // Attach the album to the song
-        $song->albums()->attach($albumId);
-
-        return redirect()->route('songs.show', $songId)->with('success', 'Album attached successfully.');
-    }
-
-    /**
-     * Detach an album from the song.
-     */
-    public function detachAlbum($songId, $albumId)
-    {
-        $song = Song::findOrFail($songId);
-
-        // Detach the album from the song
-        $song->albums()->detach($albumId);
-
-        return redirect()->route('songs.show', $songId)->with('success', 'Album detached successfully.');
     }
 }

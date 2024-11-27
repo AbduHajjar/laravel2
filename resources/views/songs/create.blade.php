@@ -9,6 +9,7 @@
 </head>
 
 <body class="bg-gray-100 p-6">
+    @include('layouts.nav')
     <div class="container mx-auto">
         <nav class="flex justify-between items-center py-4">
             <a href="{{ route('songs.index') }}" class="bg-blue-500 text-white py-2 px-4 rounded">Home</a>
@@ -31,6 +32,20 @@
                     <input type="text" name="singer" class="w-full px-3 py-2 border rounded"
                         value="{{ old('singer') }}">
                     @error('singer')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="albums" class="block text-gray-700">Albums:</label>
+                    <select name="albums[]" multiple class="w-full px-3 py-2 border rounded">
+                        @foreach ($albums as $album)
+                            <option value="{{ $album->id }}">
+                                {{ $album->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('albums')
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
                 </div>

@@ -9,6 +9,7 @@
 </head>
 
 <body class="bg-gray-100 p-6">
+    @include('layouts.nav')
     <div class="container mx-auto">
         <nav class="flex justify-between items-center py-4">
             <a href="{{ route('albums.index') }}" class="bg-blue-500 text-white py-2 px-4 rounded">Home</a>
@@ -47,11 +48,11 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="band" class="block text-gray-700">Band:</label>
+                    <label for="band" class="block text-gray-700">Album Band:</label>
                     <select name="band_id" class="w-full px-3 py-2 border rounded">
                         @foreach ($bands as $band)
-                            <option value = "{{ $band->id }}"
-                                {{ $band->id == $album->band_id ? 'selected' : '' }}>{{ $band->name }}</option>
+                            <option value="{{ $band->id }}">
+                                {{ $band->name }}</option>
                         @endforeach
                     </select>
                     @error('band_id')
@@ -59,51 +60,46 @@
                     @enderror
                 </div>
 
-                <!-- List of Attached Songs with Detach Option -->
-                <div class="mb-4">
-                    <label for="songs" class="block text-gray-700">Attached Songs:</label>
-                    <ul class="divide-y divide-gray-200">
-                        @foreach ($album->songs as $index => $song)
-                            <li class="flex justify-between items-center py-2">
-                                {{ $song->title }}
-                                <form
-                                    action="{{ route('albums.songs.detach', ['album' => $album->id, 'song' => $song->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    <button type="submit"
-                                        class="bg-red-500 text-white py-1 px-2 rounded">Detach</button>
-                                </form>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-
-
-                <!-- List of Available Songs with Attach Option -->
-                <div class="mb-4">
-                    <label for="songs" class="block text-gray-700">Available Songs:</label>
-                    <ul class="divide-y divide-gray-200">
-                        @foreach ($songs as $song)
-                            <li class="flex justify-between items-center py-2">
-                                {{ $song->title }}
-                                <form action="{{ route('albums.songs.attach', $album->id) }}" method="POST">
-                                    @csrf
-                                    <!-- Hidden input for song_id -->
-                                    <input type="hidden" name="song_id" value="{{ $song->id }}">
-                                    <button type="submit"
-                                        class="bg-green-500 text-white py-1 px-2 rounded">Attach</button>
-                                </form>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
 
                 <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded">Update</button>
             </form>
+            <br>
+
+            <!-- List of Attached Songs with Detach Option -->
+            <div class="mb-4">
+                <label for="songs" class="block text-gray-700">Attached Songs:</label>
+                <ul class="divide-y divide-gray-200">
+                    @foreach ($album->songs as $song)
+                        <li class="flex justify-between items-center py-2">
+                            {{ $song->title }}
+                            <form
+                                action="{{ route('albums.songs.detach', ['album' => $album->id, 'song' => $song->id]) }}"
+                                method="POST">
+                                @csrf
+                                <button type="submit" class="bg-red-500 text-white py-1 px-2 rounded">Detach</button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
 
 
+
+            <!-- List of Available Songs with Attach Option -->
+            <div class="mb-4">
+                <label for="songs" class="block text-gray-700">Available Songs:</label>
+                <ul class="divide-y divide-gray-200">
+                    @foreach ($songs as $song)
+                        <li class="flex justify-between items-center py-2">
+                            {{ $song->title }}
+                            <form action="{{ route('albums.songs.attach', [$album->id, 'song' => $song->id]) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="bg-green-500 text-white py-1 px-2 rounded">Attach</button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
 
 

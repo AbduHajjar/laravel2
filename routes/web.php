@@ -20,7 +20,7 @@ Route::get('/albums/{album}/edit', [AlbumController::class, 'edit'])->name('albu
 Route::put('/albums/{album}', [AlbumController::class, 'update'])->name('albums.update');
 Route::delete('/albums/{album}', [AlbumController::class, 'destroy'])->name('albums.destroy');
 // attach and detach songs to albums
-Route::post('/albums/{album}/songs/attach', [AlbumController::class, 'attachSong'])->name('albums.songs.attach');
+Route::post('/albums/{album}/songs/{song}/attach', [AlbumController::class, 'attachSong'])->name('albums.songs.attach');
 Route::post('/albums/{album}/songs/{song}/detach', [AlbumController::class, 'detachSong'])->name('albums.songs.detach');
 
 
@@ -42,6 +42,3 @@ Route::get('/songs/{song}', [SongController::class, 'show'])->name('songs.show')
 Route::get('/songs/{song}/edit', [SongController::class, 'edit'])->name('songs.edit');
 Route::put('/songs/{song}', [SongController::class, 'update'])->name('songs.update');
 Route::delete('/songs/{song}', [SongController::class, 'destroy'])->name('songs.destroy');
-// attach and detach songs to albums
-Route::post('/songs/{song}/albums/attach', [SongController::class, 'attachAlbum'])->name('songs.albums.attach');
-Route::post('/songs/{song}/albums/{album}/detach', [SongController::class, 'detachAlbum'])->name('songs.albums.detach');

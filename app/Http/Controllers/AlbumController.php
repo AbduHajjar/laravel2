@@ -95,18 +95,12 @@ class AlbumController extends Controller
         return redirect()->route('albums.index')->with('success', 'Album deleted successfully.');
     }
 
-
-
-    public function attachSong(Request $request, $albumId)
+    public function attachSong($albumId, $songId)
     {
         $album = Album::findOrFail($albumId);
-        $request->validate([
-            'song_id' => 'required|exists:songs,id',
-        ]);
-
-        $songId = $request->input('song_id');
+        $song = Song::findOrFail($songId);
         // Attach the song to the album
-        $album->songs()->attach($songId);
+        $album->songs()->attach($song->id);
 
         return redirect()->route('albums.edit', $albumId)->with('success', 'Song detached successfully.');
     }

@@ -9,6 +9,7 @@
 </head>
 
 <body class="bg-gray-100 p-6">
+    @include('layouts.nav')
     <div class="container mx-auto">
         <nav class="flex justify-between items-center py-4">
             <a href="{{ route('songs.index') }}" class="bg-blue-500 text-white py-2 px-4 rounded">Home</a>

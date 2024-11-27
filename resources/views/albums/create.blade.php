@@ -9,6 +9,7 @@
 </head>
 
 <body class="bg-gray-100 p-6">
+    @include('layouts.nav')
     <div class="container mx-auto">
         <nav class="flex justify-between items-center py-4">
             <a href="{{ route('albums.index') }}" class="bg-blue-500 text-white py-2 px-4 rounded">Home</a>
@@ -57,6 +58,8 @@
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
+
+                
 
                 <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded">Create</button>
             </form>

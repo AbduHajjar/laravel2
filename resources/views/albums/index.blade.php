@@ -9,6 +9,7 @@
 </head>
 
 <body class="bg-gray-100 p-6">
+    @include('layouts.nav')
     <div class="container mx-auto">
         <nav class="flex justify-between items-center py-4">
             <h1 class="text-2xl font-bold">Albums Management</h1>
