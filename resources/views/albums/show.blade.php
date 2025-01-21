@@ -52,13 +52,19 @@
             </div>
 
             <div class="flex space-x-4 mt-4">
+                @auth
                 <a href="{{ route('albums.edit', $album->id) }}"
                     class="bg-yellow-500 text-white py-2 px-4 rounded">Edit</a>
-                <form action="{{ route('albums.destroy', $album->id) }}" method="POST">
+                @endauth
+
+
+                @auth
+                    <form action="{{ route('albums.destroy', $album->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded">Delete</button>
                 </form>
+                @endauth
             </div>
         </div>
     </div>

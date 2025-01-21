@@ -12,6 +12,9 @@
             <li>
                 <a href="{{ route('songs.index') }}" class="text-gray-300 hover:text-white">Songs</a>
             </li>
+            <li>
+                <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-white">Dashboard</a>
+            </li>
         </ul>
     </div>
 </nav>

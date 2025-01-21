@@ -13,7 +13,9 @@
     <div class="container mx-auto">
         <nav class="flex justify-between items-center py-4">
             <h1 class="text-2xl font-bold">Songs Management</h1>
+            @auth
             <a href="{{ route('songs.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded">Create New Song</a>
+            @endauth
         </nav>
 
         <div class="bg-white p-6 rounded shadow-md mt-6">
@@ -29,14 +31,19 @@
                         <div class="flex space-x-2">
                             <a href="{{ route('songs.show', $song->id) }}"
                                 class="bg-green-500 text-white py-1 px-3 rounded">Show</a>
+                            @auth
                             <a href="{{ route('songs.edit', $song->id) }}"
                                 class="bg-yellow-500 text-white py-1 px-3 rounded">Edit</a>
+                            @endauth
+
+                            @auth
                             <form action="{{ route('songs.destroy', $song->id) }}" method="POST"
                                 onsubmit="return confirm('Are you sure you want to delete this song?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded">Delete</button>
                             </form>
+                            @endauth
                         </div>
                     </li>
                 @endforeach
