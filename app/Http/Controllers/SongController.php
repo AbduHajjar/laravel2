@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Album;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class SongController extends Controller
 {
@@ -20,10 +21,25 @@ class SongController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $albums = Album::all();
-        return view('songs.create' , ['albums' => $albums]);
+        
+
+        $songsFromAPI = [];
+        if ($request->query->has('title')) //check if a title is being searched
+        {
+            $api_key = '14eb96764d1393a7df136660bff9c2b9'; //last.fm api key
+            $title = $request->query('title');  //get the title from the query string
+            $response = Http::get(
+                'http://ws.audioscrobbler.com/2.0/?method=track.search&track=' .
+                    $title . '&api_key=' . $api_key . '&format=json'
+            )->json(); //make the api call and get the response
+            $songsFromAPI = $response["results"]["trackmatches"]["track"]; //get the tracks from the response
+                // dd($songsFromAPI);
+        }
+
+        return view('songs.create', ['albums' => $albums], ['songsFromAPI' => $songsFromAPI]);
     }
 
     /**
@@ -43,7 +59,7 @@ class SongController extends Controller
             'singer' => 'nullable|string|max:255',
             'albums' => 'nullable|array',
             'albums.*' => 'exists:albums,id'
-            
+
         ]);
         $song = Song::create($validatedData);
         if ($request->has('albums')) {

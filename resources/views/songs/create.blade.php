@@ -50,8 +50,38 @@
                     @enderror
                 </div>
                 <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded">Create</button>
-            </form>
+            </form><br><br>
+            <div>
+                <h1>Search a song via API:</h1><br>
+            
+                <form action="{{ route('songs.create')}}" method="GET">
+                    @csrf
+                    <label for="search" class="block text-gray-700">Search by name:</label>
+                    <input type="text" name="title" class="w-full px-3 py-2 border rounded">
+                    <button type="submit">Find</button>                    
+                </form>
+
+                <div>
+                    <h1>Results:</h1>
+                    <ul>
+                       @foreach ($songsFromAPI as $songFromAPI)
+
+                          <form action="{{ route('songs.index') }}" method="POST">
+                            @csrf
+                       <input type="text" name="title" value="{{ $songFromAPI["name"] }}">
+
+                       <input type="text" name="artist" value="{{ $songFromAPI["artist"] }}">
+
+
+                       <button type="submit">Add</button>
+                          </form>
+                        @endforeach
+                    </ul>
+
+                </div>
+            </div>
         </div>
+
     </div>
 </body>
 
